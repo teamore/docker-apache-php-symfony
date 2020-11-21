@@ -7,7 +7,7 @@
   roles:
     - common
     - apache2
-    - php
+    - php7.4
     - user
     - curl
     - yarn

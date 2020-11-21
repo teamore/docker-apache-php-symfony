@@ -14,7 +14,11 @@ services:
       args:
         service: frontend
     volumes:
-      - "./public:/var/www/html/public:rw"
+#      - "./microservices/frontend:/var/www/html:rw"
+      - "./microservices/frontend/app:/var/www/html:rw"
+    working_dir: /var/www/html
+    command: >
+      bash -c "composer install && /usr/sbin/apache2ctl -D FOREGROUND"
 
   mysql:
     image: mysql:5.7
