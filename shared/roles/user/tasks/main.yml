@@ -1,0 +1,7 @@
+---
+- name: Create user
+  user:
+    name: kodal
+    shell: /bin/bash
+    groups: sudo
+    append: yes

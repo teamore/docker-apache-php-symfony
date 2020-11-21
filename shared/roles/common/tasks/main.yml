@@ -1,0 +1,16 @@
+---
+- name: Update Cache
+  apt:
+    cache_valid_time: 600
+
+- name: Upgrade packages
+  apt:
+    name: aptitude
+    force_apt_get: yes
+
+- name: Install packages
+  apt:
+    name:
+      - nano
+      - vim
+    state: present

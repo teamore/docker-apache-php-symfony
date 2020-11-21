@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  user: kodal
+  vars:
+    username: kodal
+    password: kodal
+  roles:
+    - common
+    - apache2
+    - php
+    - user
+    - curl
+    - yarn
+    - geerlingguy.composer

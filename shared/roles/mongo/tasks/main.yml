@@ -1,0 +1,25 @@
+---
+- name: Install php-mongo
+  apt:
+    name: php-mongo
+    state: present
+    force: yes
+    update_cache: yes
+
+- name: Update pecl.php.net channel
+  command: pecl channel-update pecl.php.net
+
+- name: Add mongo pecl package
+  pear:
+    name: pecl/mongodb
+    state: present
+
+- name: Add extension to cli php.ini
+  lineinfile:
+    path: /etc/php/7.3/cli/php.ini
+    line: extension=mongodb.so
+
+- name: Add extension to apache2 php.ini
+  lineinfile:
+    path: /etc/php/7.3/apache2/php.ini
+    line: extension=mongodb.so

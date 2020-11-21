@@ -1,0 +1,72 @@
+version: '2'
+services:
+
+  frontend:
+    container_name: ${PROJECT_NAME}-frontend
+    extends:
+      file: ./shared/dockerfiles/templates/common.yml
+      service: apache
+    depends_on:
+      - mysql
+    ports:
+      - 82:80
+    build:
+      args:
+        service: frontend
+    volumes:
+      - "./public:/var/www/html/public:rw"
+
+  mysql:
+    image: mysql:5.7
+    container_name: ${PROJECT_NAME}-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: database
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+  mongodb:
+    image: mongo
+    container_name: ${PROJECT_NAME}-mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: ${PROJECT_NAME}-phpmyadmin
+    ports:
+      - 8081:80
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: mysql
+
+  maildev:
+    image: djfarrelly/maildev
+    container_name: ${PROJECT_NAME}-maildev
+    ports:
+      - 8002:80
+
+volumes:
+  mysql_data:
+  mongo_data:
+  rabbit:
+    driver: local
+  apache-logs:
+    driver_opts:
+      type: none
+      device: $PWD/apache-logs/
+      o: bind

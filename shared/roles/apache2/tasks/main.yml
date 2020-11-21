@@ -1,0 +1,28 @@
+---
+- name: Install apache2
+  apt:
+    name: apache2
+    state: present
+
+- name: enabling modules
+  apache2_module:
+    name: rewrite
+    state: present
+
+- name: Create host config
+  template: 
+    src: templates/vhost.conf
+    dest: "/etc/apache2/sites-available/{{ ansible_env.service }}.lo.conf"
+
+- name: "a2ensite {{ ansible_env.service }}.lo"
+  command: "a2ensite {{ ansible_env.service }}.lo"
+  args:
+    creates: "/etc/apache2/sites-enabled/{{ ansible_env.service }}.lo.conf"
+
+- name: "a2dissite 000-default.conf"
+  command: "a2dissite 000-default.conf"
+
+- name: set servername
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    line: ServerName localhost

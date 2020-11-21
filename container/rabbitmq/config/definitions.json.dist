@@ -1,0 +1,29 @@
+{
+ "users": [
+  {
+   "name": "[YOUR_USER]",
+   "password": "[YOUR_PASSWORD]",
+   "hashing_algorithm": "rabbit_password_hashing_sha256",
+   "tags": "administrator"
+  }
+ ],
+ "vhosts": [
+  {
+   "name": "[YOUR_VIRTUAL_HOST]]"
+  }
+ ],
+ "permissions": [
+  {
+   "user": "[YOUR_USER]",
+   "vhost": "[YOUR_VIRTUAL_HOST]",
+   "configure": ".*",
+   "write": ".*",
+   "read": ".*"
+  }
+ ],
+ "parameters": [],
+ "policies": [],
+ "queues": [],
+ "exchanges": [],
+ "bindings": []
+}

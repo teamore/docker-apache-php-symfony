@@ -1,0 +1,4 @@
+[Sat Nov 21 11:44:32.671773 2020] [php7:error] [pid 10] [client 172.21.0.1:52424] script '/var/www/html/public/index.php' not found or unable to stat
+[Sat Nov 21 11:44:33.393121 2020] [php7:error] [pid 10] [client 172.21.0.1:52424] script '/var/www/html/public/index.php' not found or unable to stat
+[Sat Nov 21 11:44:33.868490 2020] [php7:error] [pid 10] [client 172.21.0.1:52424] script '/var/www/html/public/index.php' not found or unable to stat
+[Sat Nov 21 11:45:47.868336 2020] [php7:error] [pid 12] [client 172.21.0.1:52428] script '/var/www/html/public/index.php' not found or unable to stat

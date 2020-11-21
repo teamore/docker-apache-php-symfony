@@ -1,0 +1,15 @@
+version: '2'
+services:
+  apache:
+    build:
+      context: ../../../
+      dockerfile: ./shared/dockerfiles/Microservice.Dockerfile
+    expose:
+      - 80
+      - 443
+    command: ["apache2ctl", "-D", "FOREGROUND"]
+    volumes:
+      - $SSH_AUTH_SOCK:/ssh-agent
+      - apache-logs:/var/log/container
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent

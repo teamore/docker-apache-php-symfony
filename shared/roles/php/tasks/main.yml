@@ -1,0 +1,36 @@
+---
+- name: Add PHP repo
+  apt_repository:
+    repo: ppa:ondrej/php
+
+- name: Install PHP
+  apt:
+    name:
+      - php7.2
+      - php7.2-curl
+      - php7.2-dev
+      - php7.2-gd
+      - php7.2-mbstring
+      - php7.2-mysql
+      - php7.2-xml
+      - php7.2-xmlrpc
+      - php7.2-zip
+      - php7.2-bcmath
+      - libapache2-mod-php7.2
+    state: present
+    force: yes
+    update_cache: yes
+
+- name: Set PHP upload max filesize
+  lineinfile: 
+    dest: /etc/php/7.2/apache2/php.ini
+    regexp: "^upload_max_filesize"
+    line: "upload_max_filesize = 800M"
+    state: present
+
+- name: Set PHP post max filesize    
+  lineinfile: 
+    dest: /etc/php/7.2/apache2/php.ini
+    regexp: "^post_max_size"
+    line: "post_max_size = 800M"
+    state: present
