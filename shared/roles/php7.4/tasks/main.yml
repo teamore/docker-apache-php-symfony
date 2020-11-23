@@ -1,7 +1,7 @@
 ---
-- name: Add PHP repo
-  apt_repository:
-    repo: ppa:ondrej/php
+#- name: Add PHP repo
+#  apt_repository:
+#    repo: ppa:ondrej/php
 
 - name: Install PHP
   apt:
@@ -18,7 +18,7 @@
       - php7.4-bcmath
       - libapache2-mod-php7.4
     state: present
-    force: yes
+    force_apt_get: yes
     update_cache: yes
 
 - name: Set PHP upload max filesize

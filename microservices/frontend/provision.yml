@@ -6,9 +6,10 @@
     password: kodal
   roles:
     - common
-    - apache2
     - php7.4
     - user
     - curl
     - yarn
+    - npm
     - geerlingguy.composer
+    - apache2

@@ -1,15 +1,32 @@
 # our base image
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 ARG service
 ENV service "$service"
 ENV VIRTUAL_HOST "${service}.lo"
 
-# Install ansible
-RUN apt-get update
-RUN apt-get install -y software-properties-common
-RUN apt-add-repository ppa:ansible/ansible
-RUN apt-get update && apt-get install -y ansible
-RUN echo 'localhost ansible_connection=local' >> /etc/ansible/hosts
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    ansible \
+    apt-transport-https \
+    ca-certificates-java \
+    curl \
+    init \
+    openssh-server openssh-client \
+    unzip \
+    rsync \
+    sudo \
+    fuse snapd snap-confine squashfuse \
+    gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure udev for docker integration
+RUN dpkg-divert --local --rename --add /sbin/udevadm && ln -s /bin/true /sbin/udevadm
+
+RUN echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
+
+# ENTRYPOINT ["/sbin/init"]
 
 # Add ansible related files to docker image
 RUN echo "Using default Microservice.Dockerfile for Microservice $service"

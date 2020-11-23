@@ -11,6 +11,6 @@
 - name: Install packages
   apt:
     name:
-      - nano
       - vim
+      - nano
     state: present
