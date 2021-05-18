@@ -12,7 +12,7 @@ Apache service must not run locally, otherwise docker container will crash.
 # Hosts
 Create an example host in your `/etc/hosts` file which points to the webserver in the docker container
 
-`127.0.0.1 kodal.lo`
+`127.0.0.1 butterflies.lo`
 
 ## Docker Repository at another location
 If your Docker repository is at another location edit the `PATH_MICROSERVICES` in `.env` accordingly.
@@ -86,8 +86,8 @@ You should see at least one container running
 
 ---
 
-You should now be able to visit http://kodal.lo in your browser.  
-The frontend available under http://kodal.lo:4200  
+You should now be able to visit http://butterflies.lo in your browser.  
+The frontend available under http://butterflies.lo:4200  
 RabbitMq Managment should be available at http://localhost:15672  
 
 # Xdebug
