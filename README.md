@@ -73,9 +73,9 @@ docker-compose up [-d]
 Log into Web container and run composer install to get dependencies
 
 ```bash
-docker exec -it kodal-backend bash
-su kodal
-cd /var/www/html/kodal
+docker exec -it butterflies-backend bash
+su butterflies
+cd /var/www/html/butterflies
 composer install
 ```
 

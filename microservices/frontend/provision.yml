@@ -1,9 +1,9 @@
 ---
 - hosts: localhost
-  user: kodal
+  user: butterflies
   vars:
-    username: kodal
-    password: kodal
+    username: butterflies
+    password: butterflies
   roles:
     - common
     - php7.4
