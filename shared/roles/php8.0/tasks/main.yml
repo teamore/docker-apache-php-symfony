@@ -1,9 +1,15 @@
 ---
-#- name: Add PHP repo
-#  apt_repository:
-#    repo: ppa:ondrej/php
 
-- name: Install PHP
+- name: Add Software Properties Common
+  apt:
+    name:
+      - software-properties-common
+
+- name: Add PHP repo
+  apt_repository:
+    repo: ppa:ondrej/php
+
+- name: Install PHP 8.0
   apt:
     name:
       - php8.0
