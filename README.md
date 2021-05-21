@@ -48,7 +48,8 @@ You should see at least one container running
 
 ---
 
-You should now be able to visit http://hirefly.lo:83 in your browser.
+You should now be able to visit http://hirefly.lo:83 in your browser. If you want to run the application on another port 
+than the specified one (83), please adjust the configuration accordingly.
 
 # Xdebug
 To use Xdebug add the role xdebug to your microservice.
