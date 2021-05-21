@@ -1,21 +1,21 @@
 version: '2'
 services:
 
-  frontend:
-    container_name: ${PROJECT_NAME}-frontend
+  app:
+    container_name: ${PROJECT_NAME}-app
     extends:
       file: ./shared/dockerfiles/templates/common.yml
       service: apache
     depends_on:
       - mysql
     ports:
-      - 82:80
+      - 83:80
     build:
       args:
         service: frontend
     volumes:
 #      - "./microservices/frontend:/var/www/html:rw"
-      - "../frontend.butterflies.de:/var/www/html:rw"
+      - "../hirefly-app:/var/www/html:rw"
     working_dir: /var/www/html
     command: >
       bash -c "composer install && /usr/sbin/apache2ctl -D FOREGROUND"
@@ -27,28 +27,16 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: database
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - mysql_data:/var/lib/mysql
     restart: always
-
-  mongodb:
-    image: mongo
-    container_name: ${PROJECT_NAME}-mongodb
-    restart: always
-    ports:
-      - 27017:27017
-    volumes:
-      - mongo_data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: ${PROJECT_NAME}-phpmyadmin
     ports:
-      - 8081:80
+      - 8083:80
     links:
       - mysql
     depends_on:

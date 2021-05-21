@@ -1,12 +1,12 @@
 ---
 - hosts: localhost
-  user: butterflies
+  user: hirefly
   vars:
-    username: butterflies
-    password: butterflies
+    username: hirefly
+    password: hirefly
   roles:
     - common
-    - php7.4
+    - php8.0
     - user
     - curl
     - yarn
