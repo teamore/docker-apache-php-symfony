@@ -70,3 +70,8 @@ Enable path mappings -> Select the root of your local project and set the absolu
 Save the settings.
 
 Don't forget to make PHPStorm listen to debug sessions by clicking on the little phone in the top right of PHPStorm. 
+
+# Troubleshoot
+If composer install fails to complete with an 137 exit code, stop the container and re-run ``docker compose up``. If the
+problem recurs, try to increase the memory limit via the docker preferences (under Resources/memory). Once composer install was successfully completed, you can lower the memory limit back to its original
+setting (usually 2GB).
