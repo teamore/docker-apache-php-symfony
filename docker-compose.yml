@@ -25,7 +25,7 @@ services:
     container_name: ${PROJECT_NAME}-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: database
+      MYSQL_DATABASE: hirefly-de
     ports:
       - 3307:3306
     volumes:
