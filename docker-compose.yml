@@ -14,8 +14,11 @@ services:
       args:
         service: frontend
     volumes:
-#      - "./microservices/frontend:/var/www/html:rw"
-      - "../hirefly-app:/var/www/html:rw"
+#      - "../hirefly-app:/var/www/html:rw"
+      - type: volume
+        source: "hirefly_app"
+        target: "/var/www/html"
+        read_only: false
     working_dir: /var/www/html
     command: >
       bash -c "composer install --prefer-dist -vvv --profile && yarn && yarn encore dev && /usr/sbin/apache2ctl -D FOREGROUND"
@@ -53,6 +56,12 @@ services:
       - 8002:80
 
 volumes:
+  hirefly_app:
+    driver: local
+    driver_opts:
+      type: none
+      device: ../hirefly-app
+      o: bind
   mysql_data:
   mongo_data:
   rabbit:
