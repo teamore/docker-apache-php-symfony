@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
 
   app:
@@ -69,5 +69,5 @@ volumes:
   apache-logs:
     driver_opts:
       type: none
-      device: $PWD/apache-logs/
+      device: ./apache-logs/
       o: bind
