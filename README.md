@@ -12,7 +12,7 @@ Apache service must not run locally, otherwise docker container will crash.
 # Hosts
 Create an example host in your `/etc/hosts` file which points to the webserver in the docker container
 
-`127.0.0.1 hirefly.lo`
+`127.0.0.1 polypus.lo`
 
 ## Docker Repository at another location
 If your Docker repository is at another location edit the `PATH_MICROSERVICES` in `.env` accordingly.
@@ -35,8 +35,8 @@ docker-compose up [-d]
 Log into Web container and run composer install to get dependencies
 
 ```bash
-docker exec -it hirefly-app bash
-su hirefly
+docker exec -it polypus-app bash
+su polypus
 cd /var/www/html
 composer install
 ```
@@ -48,7 +48,7 @@ You should see at least one container running
 
 ---
 
-You should now be able to visit http://hirefly.lo:83 in your browser. If you want to run the application on another port 
+You should now be able to visit http://polypus.lo:83 in your browser. If you want to run the application on another port 
 than the specified one (83), please adjust the configuration accordingly.
 
 # Xdebug

@@ -9,12 +9,12 @@ services:
     depends_on:
       - mysql
     ports:
-      - 83:80
+      - 84:80
     build:
       args:
         service: frontend
     volumes:
-      - "../hirefly-app:/var/www/html:rw"
+      - "../polypus-app:/var/www/html:rw"
     working_dir: /var/www/html
     command: >
       bash -c "composer install --prefer-dist -vvv --profile && yarn && yarn encore dev && /usr/sbin/apache2ctl -D FOREGROUND"
@@ -24,9 +24,9 @@ services:
     container_name: ${PROJECT_NAME}-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: hirefly-de
+      MYSQL_DATABASE: polypus-de
     ports:
-      - 3307:3306
+      - 33004:3306
     volumes:
       - mysql_data:/var/lib/mysql
     restart: always
@@ -35,7 +35,7 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: ${PROJECT_NAME}-phpmyadmin
     ports:
-      - 8083:80
+      - 8084:80
     links:
       - mysql
     depends_on:
@@ -49,7 +49,7 @@ services:
     image: djfarrelly/maildev
     container_name: ${PROJECT_NAME}-maildev
     ports:
-      - 8002:80
+      - 8004:80
 
 volumes:
   mysql_data:

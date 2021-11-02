@@ -1,7 +1,7 @@
 ---
 - name: Create user
   user:
-    name: hirefly
+    name: polypus
     shell: /bin/bash
     groups: sudo
     append: yes

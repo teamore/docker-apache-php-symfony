@@ -1,9 +1,9 @@
 ---
 - hosts: localhost
-  user: hirefly
+  user: polypus
   vars:
-    username: hirefly
-    password: hirefly
+    username: polypus
+    password: polypus
   roles:
     - common
     - php8.0
