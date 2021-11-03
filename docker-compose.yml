@@ -17,7 +17,7 @@ services:
       - "../polypus-app:/var/www/html:rw"
     working_dir: /var/www/html
     command: >
-      bash -c "composer install --prefer-dist -vvv --profile && yarn && yarn encore dev && /usr/sbin/apache2ctl -D FOREGROUND"
+      bash -c "./build-project.sh && /usr/sbin/apache2ctl -D FOREGROUND"
 
   mysql:
     image: mysql:5.7
