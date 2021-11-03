@@ -60,7 +60,7 @@ Add Server:
 ```
 Name: microservice.lo
 Host: microservice.lo
-Port: 83
+Port: 84
 Debugger: Xdebug
 ```
 Hostname = Servicename + .lo
