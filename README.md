@@ -48,7 +48,7 @@ You should see at least one container running
 
 ---
 
-You should now be able to visit http://polypus.lo:83 in your browser. If you want to run the application on another port 
+You should now be able to visit http://polypus.lo:84 in your browser. If you want to run the application on another port 
 than the specified one (83), please adjust the configuration accordingly.
 
 # Xdebug
