@@ -6,6 +6,10 @@ ENV VIRTUAL_HOST "${service}.lo"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ARG PROJECT_NAME
+ARG VIRTUAL_HOST
+ARG PATH_SERVICES
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     ansible \
