@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 services:
 
   app:
@@ -48,6 +48,27 @@ services:
       MYSQL_USERNAME: root
       MYSQL_ROOT_PASSWORD: root
       PMA_HOST: mysql
+
+  mongo:
+    image: mongo
+    container_name: ${PROJECT_NAME}-mongo
+    restart: always
+    ports:
+      - ${MONGODB_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  mongo-express:
+    image: mongo-express
+    container_name: ${PROJECT_NAME}-mexp
+    restart: always
+    ports:
+      - ${MONGODB_EXPRESS_PORT}:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
 
   maildev:
     image: djfarrelly/maildev
