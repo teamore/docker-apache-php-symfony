@@ -10,6 +10,7 @@
     #- npm
     - php8.x
     - user
+    - mongo
     - curl
     - yarn
     - geerlingguy.composer
