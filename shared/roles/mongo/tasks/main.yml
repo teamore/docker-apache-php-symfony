@@ -16,10 +16,10 @@
 
 - name: Add extension to cli php.ini
   lineinfile:
-    path: /etc/php/7.3/cli/php.ini
+    path: /etc/php/{{ PHP_VERSION }}/cli/php.ini
     line: extension=mongodb.so
 
 - name: Add extension to apache2 php.ini
   lineinfile:
-    path: /etc/php/7.3/apache2/php.ini
+    path: /etc/php/{{ PHP_VERSION }}/apache2/php.ini
     line: extension=mongodb.so

@@ -16,6 +16,7 @@ services:
         service: frontend
         PROJECT_NAME: ${PROJECT_NAME}
         VIRTUAL_HOST: ${VIRTUAL_HOST}
+        PHP_VERSION: ${PHP_VERSION}
         PATH_SERVICES: ${PATH_SERVICES}
     volumes:
       - "../${PROJECT_NAME}-app:/var/www/html:rw"

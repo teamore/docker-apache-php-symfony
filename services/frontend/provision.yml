@@ -8,7 +8,7 @@
     - common
     - geerlingguy.nodejs
     #- npm
-    - php8.0
+    - php8.x
     - user
     - curl
     - yarn

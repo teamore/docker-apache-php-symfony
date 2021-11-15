@@ -7,9 +7,11 @@ ENV VIRTUAL_HOST "${service}.lo"
 ARG PROJECT_NAME
 ARG VIRTUAL_HOST
 ARG PATH_SERVICES
+ARG PHP_VERSION
 
 ENV projectName "${PROJECT_NAME}"
 ENV virtualHost "${VIRTUAL_HOST}"
+ENV phpVersion "${PHP_VERSION}"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -36,7 +38,7 @@ RUN echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
 # ENTRYPOINT ["/sbin/init"]
 
 # Add ansible related files to docker image
-RUN echo "preparing frontend server [$hostname] for project [$projectName]"
+RUN echo "preparing frontend server [$virtualHost] for project [$projectName] with php[$phpVersion]"
 RUN echo "Using default Frontend.Dockerfile for Service [$service]"
 ADD ${PATH_SERVICES}/$service/provision.yml provision.yml
 ADD ./shared/roles roles
@@ -45,7 +47,7 @@ COPY ${PATH_SERVICES}/$service/scripts/* scripts/
 RUN mkdir -p /etc/apache2/ssl
 
 # run provisioning
-RUN ansible-playbook provision.yml -c local --extra-vars "PROJECT_NAME=${PROJECT_NAME} VIRTUAL_HOST=${VIRTUAL_HOST}"
+RUN ansible-playbook provision.yml -c local --extra-vars "PHP_VERSION=${PHP_VERSION} PROJECT_NAME=${PROJECT_NAME} VIRTUAL_HOST=${VIRTUAL_HOST}"
 
 # run additional install scripts
 RUN ["chmod", "+x", "./scripts/post_install.sh"]
