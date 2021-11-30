@@ -14,6 +14,11 @@
     name: ssl
     state: present
 
+- name: enabling headers
+  apache2_module:
+    name: headers
+    state: present
+
 - name: Create host config
   template: 
     src: templates/vhost.conf
