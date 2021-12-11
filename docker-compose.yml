@@ -71,6 +71,17 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
       ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
 
+  elastic:
+    image: elasticsearch:7.8.0
+    container_name: ${PROJECT_NAME}-elastic
+    restart: always
+    ports:
+      - ${ELASTIC_PORT}:9200
+    environment:
+      discovery.type: 'single-node'
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+
   maildev:
     image: djfarrelly/maildev
     container_name: ${PROJECT_NAME}-maildev
@@ -87,3 +98,5 @@ volumes:
       type: none
       device: ./apache-logs/
       o: bind
+  esdata01:
+    driver: local
