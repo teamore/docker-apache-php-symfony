@@ -71,16 +71,32 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
       ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
 
-  elastic:
-    image: elasticsearch:7.8.0
+  elasticsearch:
+    image: elasticsearch:7.9.3
     container_name: ${PROJECT_NAME}-elastic
     restart: always
     ports:
       - ${ELASTIC_PORT}:9200
     environment:
-      discovery.type: 'single-node'
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 512mo HEAP
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
       - esdata01:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: ${PROJECT_NAME}-kibana
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - ${KIBANA_PORT}:5601
 
   maildev:
     image: djfarrelly/maildev
