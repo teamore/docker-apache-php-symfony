@@ -22,6 +22,7 @@
       - php{{ PHP_VERSION }}-xmlrpc
       - php{{ PHP_VERSION }}-zip
       - php{{ PHP_VERSION }}-bcmath
+      - php{{ PHP_VERSION }}-xdebug
       - libapache2-mod-php{{ PHP_VERSION }}
     state: present
     force_apt_get: yes
