@@ -19,7 +19,7 @@
       - 'xdebug.remote_enable = 1'
       - 'xdebug.remote_host = localhost'
       - 'xdebug.remote_port = 9000'
-      - 'xdebug.mode=develop,trace,profile,coverage,gcstats'
+      - 'xdebug.mode=debug,develop,trace,profile,coverage,gcstats'
 
 - name: Configure xdebug for PHP {{ PHP_VERSION }} in apache2
   lineinfile:
@@ -34,4 +34,4 @@
       - 'xdebug.remote_enable = 1'
       - 'xdebug.remote_host = localhost'
       - 'xdebug.remote_port = 9000'
-      - 'xdebug.mode=develop,trace,profile,coverage,gcstats'
+      - 'xdebug.mode=debug,develop,trace,profile,coverage,gcstats'
