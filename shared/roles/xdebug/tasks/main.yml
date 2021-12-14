@@ -1,16 +1,17 @@
 ---
-- name: Install php-xdebug
+- name: Install php{{ PHP_VERSION }}-xdebug
   apt:
       name: php-xdebug
       state: present
       force: yes
       update_cache: yes
 
-- name: Configure xdebug in cli
+- name: Configure xdebug for PHP {{ PHP_VERSION }} in cli
   lineinfile:
-      path: /etc/php/7.3/cli/php.ini
+      path: /etc/php/{{ PHP_VERSION }}/cli/php.ini
       line: '{{ item }}'
   with_items:
+      - '[xdebug]'
       - 'xdebug.remote_autostart=1'
       - 'xdebug.remote_connect_back=1'
       - 'xdebug.remote_cookie_expire_time = 3600'
@@ -18,11 +19,12 @@
       - 'xdebug.remote_host = localhost'
       - 'xdebug.remote_port = 9000'
 
-- name: Configure xdebug in apache2
+- name: Configure xdebug for PHP {{ PHP_VERSION }} in apache2
   lineinfile:
-      path: /etc/php/7.3/apache2/php.ini
+      path: /etc/php/{{ PHP_VERSION }}/apache2/php.ini
       line: '{{ item }}'
   with_items:
+      - '[xdebug]'
       - 'xdebug.remote_autostart=1'
       - 'xdebug.remote_connect_back=1'
       - 'xdebug.remote_cookie_expire_time = 3600'
