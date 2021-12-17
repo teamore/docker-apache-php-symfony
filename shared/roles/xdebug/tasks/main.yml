@@ -12,14 +12,13 @@
       line: '{{ item }}'
   with_items:
       - '[xdebug]'
-      - 'zend_extension=xdebug'
-      - 'xdebug.remote_autostart=1'
-      - 'xdebug.remote_connect_back=1'
-      - 'xdebug.remote_cookie_expire_time = 3600'
-      - 'xdebug.remote_enable = 1'
+      - 'xdebug.idekey=PHPSTORM'
+      - 'xdebug.client_host=host.docker.internal'
+      - 'xdebug.remote_cookie_expire_time = 600'
+      - 'xdebug.remote_enable=1'
       - 'xdebug.remote_host = localhost'
       - 'xdebug.remote_port = 9000'
-      - 'xdebug.mode=debug,develop,trace,profile,coverage,gcstats'
+      - 'xdebug.mode=debug'
 
 - name: Configure xdebug for PHP {{ PHP_VERSION }} in apache2
   lineinfile:
@@ -28,10 +27,10 @@
   with_items:
       - '[xdebug]'
       - 'zend_extension=xdebug'
-      - 'xdebug.remote_autostart=1'
-      - 'xdebug.remote_connect_back=1'
-      - 'xdebug.remote_cookie_expire_time = 3600'
-      - 'xdebug.remote_enable = 1'
+      - 'xdebug.idekey=PHPSTORM'
+      - 'xdebug.client_host=host.docker.internal'
+      - 'xdebug.remote_cookie_expire_time = 600'
+      - 'xdebug.remote_enable=1'
       - 'xdebug.remote_host = localhost'
       - 'xdebug.remote_port = 9000'
-      - 'xdebug.mode=debug,develop,trace,profile,coverage,gcstats'
+      - 'xdebug.mode=debug'
