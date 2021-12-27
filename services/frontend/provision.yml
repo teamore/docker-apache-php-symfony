@@ -16,3 +16,4 @@
     - geerlingguy.composer
     - apache2
     - xdebug
+    - cron
