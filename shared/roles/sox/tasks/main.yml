@@ -1,0 +1,9 @@
+---
+- name: Install SoX audio library
+  apt:
+    name: "sox"
+    state: present
+- name: Install audio format handlers (all)
+  apt:
+    name: "libsox-fmt-all"
+    state: present
