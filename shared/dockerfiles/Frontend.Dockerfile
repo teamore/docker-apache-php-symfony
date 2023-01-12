@@ -42,7 +42,7 @@ RUN echo "preparing frontend server [$virtualHost] for project [$projectName] wi
 RUN echo "Using default Frontend.Dockerfile for Service [$service]"
 ADD ${PATH_SERVICES}/$service/provision.yml provision.yml
 ADD ./shared/roles roles
-COPY ${PATH_SERVICES}/$service/scripts/* scripts/
+COPY ${PATH_SERVICES}/$service/scripts/post_install.sh scripts/
 
 RUN mkdir -p /etc/apache2/ssl
 
