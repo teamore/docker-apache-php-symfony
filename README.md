@@ -53,8 +53,16 @@ You should see at least one container running
 
 ---
 
-You should now be able to visit http://polypus.lo:80 in your browser. If you want to run the application on another port 
-than the specified one (80), please adjust the configuration accordingly.
+Unless the port settings have been altered in the .env - configuration file, you can reach the containers by calling localhost with their respective ports:
+
+* frontend: http://localhost:80 (secure connection: https://localhost:443)
+* phpmyadmin: http://localhost:8080
+* mongo express: http://localhost:8081
+* kibana (elastic): http://localhost:5601
+* elastic: http://localhost:9200
+* maildev: http://localhost:81
+
+If you want the application components to be run on different ports, please adjust the configuration accordingly by editing .env.
 
 # Xdebug
 To use Xdebug add the role xdebug to your microservice.
