@@ -12,51 +12,18 @@ Apache service must not run locally, otherwise docker container will crash.
 # Hosts
 Create an example host in your `/etc/hosts` file which points to the webserver in the docker container
 
-`127.0.0.1 kodal.lo`
+`127.0.0.1 myproject.lo
 
-## Docker Repository at another location
-If your Docker repository is at another location edit the `PATH_MICROSERVICES` in `.env` accordingly.
-Make sure that you **add a trailing forward slash** to the path and locally exclude these files from committing.
+## Configuration
+If your Dockerfiles reside at another location or if you want the application or associated containers to listen 
+to other ports (e.g. because the default ports are already in use by other applications or running docker containers),
+you can edit the respective configuration directive in the `.env`-file accordingly.
 
-Make sure you locally (your IDE, etc.) exclude these files from committing.
+By changing the configuration parameters in the .env-file, can also pick a PHP version other than the preselected 
+one (php8.1). 
 
-**Don't** edit the public `.gitignore`!
-
-
-# Configure RabbitMQ definitions
-See the dist file to create your own definitions.json
-
-```json
-{
- "users": [
-  {
-   "name": "[YOUR_USER]",
-   "password": "[YOUR_PASSWORD]",
-   "hashing_algorithm": "rabbit_password_hashing_sha256",
-   "tags": "administrator"
-  }
- ],
- "vhosts": [
-  {
-   "name": "[YOUR_VIRTUAL_HOST]]"
-  }
- ],
- "permissions": [
-  {
-   "user": "[YOUR_USER]",
-   "vhost": "[YOUR_VIRTUAL_HOST]",
-   "configure": ".*",
-   "write": ".*",
-   "read": ".*"
-  }
- ],
- "parameters": [],
- "policies": [],
- "queues": [],
- "exchanges": [],
- "bindings": []
-}
-```
+If you change the path settings for `PATH_SERVICES`, please make sure that you 
+**add a trailing forward slash** to the configured path. 
 
 # Build and run
 Switch to the root path in your repository and run docker-compose
@@ -73,9 +40,9 @@ docker-compose up [-d]
 Log into Web container and run composer install to get dependencies
 
 ```bash
-docker exec -it kodal-backend bash
-su kodal
-cd /var/www/html/kodal
+docker exec -it myproject-app bash
+su myproject
+cd /var/www/html
 composer install
 ```
 
@@ -86,9 +53,16 @@ You should see at least one container running
 
 ---
 
-You should now be able to visit http://kodal.lo in your browser.  
-The frontend available under http://kodal.lo:4200  
-RabbitMq Managment should be available at http://localhost:15672  
+Unless the port settings have been altered in the .env - configuration file, you can reach the containers by calling localhost with their respective ports:
+
+* frontend: http://localhost:80 (secure connection: https://localhost:443)
+* phpmyadmin: http://localhost:8080
+* mongo express: http://localhost:8081
+* kibana (elastic): http://localhost:5601
+* elastic: http://localhost:9200
+* maildev: http://localhost:81
+
+If you want the application components to be run on different ports, please adjust the configuration accordingly by editing .env.
 
 # Xdebug
 To use Xdebug add the role xdebug to your microservice.
@@ -109,3 +83,8 @@ Enable path mappings -> Select the root of your local project and set the absolu
 Save the settings.
 
 Don't forget to make PHPStorm listen to debug sessions by clicking on the little phone in the top right of PHPStorm. 
+
+# Troubleshoot
+If composer install fails to complete with an 137 exit code, stop the container and re-run ``docker compose up``. If the
+problem recurs, try to increase the memory limit via the docker preferences (under Resources/memory). Once composer install was successfully completed, you can lower the memory limit back to its original
+setting (usually 2GB).

@@ -4,20 +4,30 @@
     name: apache2
     state: present
 
-- name: enabling modules
+- name: enabling mod_rewrite
   apache2_module:
     name: rewrite
+    state: present
+
+- name: enabling mod_ssl
+  apache2_module:
+    name: ssl
+    state: present
+
+- name: enabling headers
+  apache2_module:
+    name: headers
     state: present
 
 - name: Create host config
   template: 
     src: templates/vhost.conf
-    dest: "/etc/apache2/sites-available/{{ ansible_env.service }}.lo.conf"
+    dest: "/etc/apache2/sites-available/{{ ansible_env.VIRTUAL_HOST }}.conf"
 
-- name: "a2ensite {{ ansible_env.service }}.lo"
-  command: "a2ensite {{ ansible_env.service }}.lo"
+- name: "a2ensite {{ ansible_env.VIRTUAL_HOST }}"
+  command: "a2ensite {{ ansible_env.VIRTUAL_HOST }}"
   args:
-    creates: "/etc/apache2/sites-enabled/{{ ansible_env.service }}.lo.conf"
+    creates: "/etc/apache2/sites-enabled/{{ ansible_env.VIRTUAL_HOST }}.conf"
 
 - name: "a2dissite 000-default.conf"
   command: "a2dissite 000-default.conf"
@@ -26,3 +36,8 @@
   lineinfile:
     path: /etc/apache2/apache2.conf
     line: ServerName localhost
+
+# create and assign self-signed SSL certificate
+
+- name: generate self-signed certificate for ssl
+  command: openssl req -new -nodes -x509 -subj "/C=DE/ST=Berlin/L=Berlin/O=IT/CN={{ ansible_env.VIRTUAL_HOST }}" -days 3650 -keyout /etc/apache2/ssl/{{ ansible_env.VIRTUAL_HOST }}.key -out /etc/apache2/ssl/{{ ansible_env.VIRTUAL_HOST }}.crt -extensions v3_ca creates=/etc/apache2/ssl/{{ ansible_env.VIRTUAL_HOST }}.crt

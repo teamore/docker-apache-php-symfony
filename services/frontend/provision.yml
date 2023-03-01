@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  user: myproject
+  vars:
+    username: myproject
+    password: myproject
+  roles:
+    - common
+    - geerlingguy.nodejs
+    #- npm
+    - php8.x
+    - user
+    - mongo
+    - curl
+    - yarn
+    - geerlingguy.composer
+    - apache2
+    - xdebug
+    - cron

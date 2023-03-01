@@ -1,54 +1,46 @@
-version: '2'
+version: '3.1'
 services:
 
-  frontend:
-    container_name: ${PROJECT_NAME}-frontend
+  app:
+    container_name: ${PROJECT_NAME}-app
     extends:
-      file: ./shared/dockerfiles/templates/common.yml
+      file: ./shared/dockerfiles/templates/frontend.yml
       service: apache
     depends_on:
       - mysql
     ports:
-      - 82:80
+      - ${HTTP_PORT}:80
+      - ${HTTPS_PORT}:443
     build:
       args:
         service: frontend
+        PROJECT_NAME: ${PROJECT_NAME}
+        VIRTUAL_HOST: ${VIRTUAL_HOST}
+        PHP_VERSION: ${PHP_VERSION}
+        PATH_SERVICES: ${PATH_SERVICES}
     volumes:
-#      - "./microservices/frontend:/var/www/html:rw"
-      - "../frontend.kodal.de:/var/www/html:rw"
+      - "../${PROJECT_NAME}-app:/var/www/html:rw"
     working_dir: /var/www/html
     command: >
-      bash -c "composer install && /usr/sbin/apache2ctl -D FOREGROUND"
+      bash -c "./script/build-project.sh && /usr/sbin/apache2ctl -D FOREGROUND"
 
   mysql:
     image: mysql:5.7
     container_name: ${PROJECT_NAME}-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: database
+      MYSQL_DATABASE: ${PROJECT_NAME}-de
     ports:
-      - 3306:3306
+      - ${MYSQL_PORT}:3306
     volumes:
       - mysql_data:/var/lib/mysql
     restart: always
-
-  mongodb:
-    image: mongo
-    container_name: ${PROJECT_NAME}-mongodb
-    restart: always
-    ports:
-      - 27017:27017
-    volumes:
-      - mongo_data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: ${PROJECT_NAME}-phpmyadmin
     ports:
-      - 8081:80
+      - ${PHPMA_PORT}:80
     links:
       - mysql
     depends_on:
@@ -58,11 +50,59 @@ services:
       MYSQL_ROOT_PASSWORD: root
       PMA_HOST: mysql
 
+  mongo:
+    image: mongo
+    container_name: ${PROJECT_NAME}-mongo
+    restart: always
+    ports:
+      - ${MONGODB_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  mongo-express:
+    image: mongo-express
+    container_name: ${PROJECT_NAME}-mexp
+    restart: always
+    ports:
+      - ${MONGODB_EXPRESS_PORT}:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+
+  elasticsearch:
+    image: elasticsearch:7.9.3
+    container_name: ${PROJECT_NAME}-elastic
+    restart: always
+    ports:
+      - ${ELASTIC_PORT}:9200
+    environment:
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 512mo HEAP
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: ${PROJECT_NAME}-kibana
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - ${KIBANA_PORT}:5601
+
   maildev:
     image: djfarrelly/maildev
     container_name: ${PROJECT_NAME}-maildev
     ports:
-      - 8002:80
+      - ${MAILDEV_PORT}:80
 
 volumes:
   mysql_data:
@@ -72,5 +112,11 @@ volumes:
   apache-logs:
     driver_opts:
       type: none
-      device: $PWD/apache-logs/
+      device: ./apache-logs/
       o: bind
+  esdata01:
+    driver: local
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge
