@@ -3,13 +3,13 @@ services:
   apache:
     build:
       context: ../../../
-      dockerfile: ./shared/dockerfiles/Microservice.Dockerfile
+      dockerfile: ./shared/dockerfiles/Frontend.Dockerfile
     expose:
       - 80
       - 443
     command: ["apache2ctl", "-D", "FOREGROUND"]
     volumes:
-#      - $SSH_AUTH_SOCK:/ssh-agent
+      #      - $SSH_AUTH_SOCK:/ssh-agent
       - apache-logs:/var/log/container
 #    environment:
 #      - SSH_AUTH_SOCK=/ssh-agent

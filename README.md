@@ -14,11 +14,16 @@ Create an example host in your `/etc/hosts` file which points to the webserver i
 
 `127.0.0.1 hirefly.lo`
 
-## Docker Repository at another location
-If your Docker repository is at another location edit the `PATH_MICROSERVICES` in `.env` accordingly.
-Make sure that you **add a trailing forward slash** to the path and locally exclude these files from committing.
+## Configuration
+If your Dockerfiles reside at another location or if you want the application or associated containers to listen 
+to other ports (e.g. because the default ports are already in use by other applications or running docker containers),
+you can edit the respective configuration directive in the `.env`-file accordingly.
 
-Make sure you locally (your IDE, etc.) exclude these files from committing.
+By changing the configuration parameters in the .env-file, can also pick a PHP version other than the preselected 
+one (php8.1). 
+
+If you change the path settings for `PATH_SERVICES`, please make sure that you 
+**add a trailing forward slash** to the configured path. 
 
 # Build and run
 Switch to the root path in your repository and run docker-compose
@@ -48,8 +53,16 @@ You should see at least one container running
 
 ---
 
-You should now be able to visit http://hirefly.lo:83 in your browser. If you want to run the application on another port 
-than the specified one (83), please adjust the configuration accordingly.
+Unless the port settings have been altered in the .env - configuration file, you can reach the containers by calling localhost with their respective ports:
+
+* frontend: http://localhost:80 (secure connection: https://localhost:443)
+* phpmyadmin: http://localhost:8080
+* mongo express: http://localhost:8081
+* kibana (elastic): http://localhost:5601
+* elastic: http://localhost:9200
+* maildev: http://localhost:81
+
+If you want the application components to be run on different ports, please adjust the configuration accordingly by editing .env.
 
 # Xdebug
 To use Xdebug add the role xdebug to your microservice.
@@ -60,7 +73,7 @@ Add Server:
 ```
 Name: microservice.lo
 Host: microservice.lo
-Port: 83
+Port: 80
 Debugger: Xdebug
 ```
 Hostname = Servicename + .lo
