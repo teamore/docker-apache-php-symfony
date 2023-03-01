@@ -12,7 +12,7 @@ Apache service must not run locally, otherwise docker container will crash.
 # Hosts
 Create an example host in your `/etc/hosts` file which points to the webserver in the docker container
 
-`127.0.0.1 polypus.lo`
+`127.0.0.1 hirefly.lo`
 
 ## Configuration
 If your Dockerfiles reside at another location or if you want the application or associated containers to listen 
@@ -40,8 +40,8 @@ docker-compose up [-d]
 Log into Web container and run composer install to get dependencies
 
 ```bash
-docker exec -it polypus-app bash
-su polypus
+docker exec -it hirefly-app bash
+su hirefly
 cd /var/www/html
 composer install
 ```
