@@ -1,9 +1,9 @@
 ---
 - hosts: localhost
-  user: hirefly
+  user: myproject
   vars:
-    username: hirefly
-    password: hirefly
+    username: myproject
+    password: myproject
   roles:
     - common
     - geerlingguy.nodejs
