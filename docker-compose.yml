@@ -4,7 +4,7 @@ services:
   app:
     container_name: ${PROJECT_NAME}-app
     extends:
-      file: ./shared/dockerfiles/templates/frontend.yml
+      file: ./shared/dockerfiles/templates/service.yml
       service: apache
     depends_on:
       - mysql

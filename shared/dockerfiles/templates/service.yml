@@ -3,7 +3,7 @@ services:
   apache:
     build:
       context: ../../../
-      dockerfile: ./shared/dockerfiles/Frontend.Dockerfile
+      dockerfile: ./shared/dockerfiles/Service.Dockerfile
     expose:
       - 80
       - 443
