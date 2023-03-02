@@ -11,7 +11,7 @@ Potential apache servers which have already been installed must not run locally,
 
 # Adjust Settings
 
-First things first: **Name your project** and **adjust the container settings (ports etc.) by reviewing the provided .env - file**. It contains a set of variables which will be used while building the docker containers and during the installation of additional services inside the containers via ansible (playbooks).
+First things first: **Name your project** and **adjust the project settings (ports etc.) by reviewing the provided .env - file**. It contains a set of variables which will be used while building the docker containers and during the installation of additional services inside the containers via ansible (playbooks).
 
 ```
 PATH_SERVICES=./services/
@@ -32,23 +32,80 @@ COMPOSE_FORCE_WINDOWS_HOST=false
 PHP_VERSION=8.2
 ```
 
+*HTTP(S)_PORT, MYSQL_PORT, PHPMY_PORT etc.*
 
+If you want the application or associated containers to listen to other ports (e.g. because the default ports are already in use by other applications or running docker containers), you can specify your desired port numbers here.
+
+*PATH_SERVICES*
+
+**You will probably not need to change this directive**. Do so only if you want to specify another root directory containing your specific (micro-)service configurations.
+
+If you change the path settings for `PATH_SERVICES`, please make sure that you 
+**add a trailing forward slash** to the configured path. 
+
+*PHP_VERSION*
+By changing the configuration parameters in the .env-file, can also pick a PHP version other than the preselected 
+one (php8.1). 
+
+# Configure Multiple (Micro)Services
+
+By default, only one (frontend) service container is created. However, you can also create multiple containers by changing the `docker-compose.yml` by adding additional services as depicted here:
+
+```
+  app:
+    container_name: ${PROJECT_NAME}-app
+    extends:
+      file: ./shared/dockerfiles/templates/service.yml
+      service: apache
+    depends_on:
+      - mysql
+    ports:
+      - ${HTTP_PORT}:80
+      - ${HTTPS_PORT}:443
+    build:
+      args:
+        service: frontend
+        [...]
+
+  ms1:
+    container_name: ${PROJECT_NAME}-ms1
+    extends:
+      file: ./shared/dockerfiles/templates/service.yml
+      service: apache
+    depends_on:
+      - mysql
+    ports:
+      - ${HTTP_PORT}:81
+      - ${HTTPS_PORT}:444
+    build:
+      args:
+        service: frontend
+        [...]
+```
+
+Each of these services will have access to the other containers (e.g. mySQL, mongodb, elasticsearch etc).
+
+You can specify service-specific configurations by defining a dedicated `service`-parameter. However, you will then also need to provide necessary configuration files and scripts underneath the folder ./services/`service`.
+
+In the following example
+
+```
+  customservice:
+    container_name: ${PROJECT_NAME}-custom
+    [...]
+      args:
+        service: custom
+    [...]
+    command: >
+      bash -c "./scripts/customscript.sh && /usr/sbin/apache2ctl -D FOREGROUND"
+```
+
+you will need to provide configuration files, scripts etc. in a dedicated folder named `custom` underneath the location specified by PATH_SERVICES (by default `./services/`).
 
 # Hosts
 Create an example host in your `/etc/hosts` file which points to the webserver in the docker container
 
 `127.0.0.1 myproject.lo`
-
-## Configuration
-If your Dockerfiles reside at another location or if you want the application or associated containers to listen 
-to other ports (e.g. because the default ports are already in use by other applications or running docker containers),
-you can edit the respective configuration directive in the `.env`-file accordingly.
-
-By changing the configuration parameters in the .env-file, can also pick a PHP version other than the preselected 
-one (php8.1). 
-
-If you change the path settings for `PATH_SERVICES`, please make sure that you 
-**add a trailing forward slash** to the configured path. 
 
 # Build and run
 Switch to the root path in your repository and run docker-compose
