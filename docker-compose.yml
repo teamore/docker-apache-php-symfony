@@ -18,9 +18,12 @@ services:
         VIRTUAL_HOST: ${VIRTUAL_HOST}
         PHP_VERSION: ${PHP_VERSION}
         PATH_SERVICES: ${PATH_SERVICES}
+        PATH_WORKDIR: ${PATH_WORKDIR}
+        PATH_SERVER_ROOT: ${PATH_SERVER_ROOT}
     volumes:
-      - "../${PROJECT_NAME}-app:/var/www/html:rw"
-    working_dir: /var/www/html
+      - "${PATH_SERVICES}/frontend:/var/www/frontend:rw"
+      - "../${PROJECT_NAME}-app:${PATH_WORKDIR}:rw"
+    working_dir: ${PATH_WORKDIR}
     command: >
       bash -c "./script/build-project.sh && /usr/sbin/apache2ctl -D FOREGROUND"
 
