@@ -9,7 +9,7 @@ https://docs.docker.com/compose/install/#install-compose
 
 Potential apache servers which have already been installed must not run locally, otherwise the provided docker container will crash.
 
-# Adjust Settings
+# Adjust Settings (optional)
 
 First things first: **Name your project** and **adjust the project settings (ports etc.) by reviewing the provided .env - file**. It contains a set of variables which will be used while building the docker containers and during the installation of additional services inside the containers via ansible (playbooks).
 
@@ -44,10 +44,11 @@ If you change the path settings for `PATH_SERVICES`, please make sure that you
 **add a trailing forward slash** to the configured path. 
 
 *PHP_VERSION*
-By changing the configuration parameters in the .env-file, can also pick a PHP version other than the preselected 
-one (php8.1). 
 
-# Configure Multiple (Micro)Services
+By changing the configuration parameters in the .env-file, can also pick a PHP version other than the preselected 
+one. 
+
+# Configure Multiple (Micro)Services (optional)
 
 By default, only one (frontend) service container is created. However, you can also create multiple containers by changing the `docker-compose.yml` by adding additional services as depicted here:
 
