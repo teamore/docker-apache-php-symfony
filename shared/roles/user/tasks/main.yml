@@ -1,7 +1,7 @@
 ---
 - name: Create user
   user:
-    name: myproject
+    name: "{{ PROJECT_NAME }}"
     shell: /bin/bash
     groups: sudo
     append: yes

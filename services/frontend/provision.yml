@@ -1,9 +1,9 @@
 ---
 - hosts: localhost
-  user: myproject
+  user: "{{ PROJECT_NAME }}"
   vars:
-    username: myproject
-    password: myproject
+    username: "{{ PROJECT_NAME }}"
+    password: "{{ PROJECT_NAME }}"
   roles:
     - common
     - geerlingguy.nodejs
