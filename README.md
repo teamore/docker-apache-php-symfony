@@ -7,12 +7,37 @@ https://docs.docker.com/install/
 
 https://docs.docker.com/compose/install/#install-compose
 
-Apache service must not run locally, otherwise docker container will crash.
+Potential apache servers which have already been installed must not run locally, otherwise the provided docker container will crash.
+
+# Adjust Settings
+
+First things first: **Name your project** and **adjust the container settings (ports etc.) by reviewing the provided .env - file**. It contains a set of variables which will be used while building the docker containers and during the installation of additional services inside the containers via ansible (playbooks).
+
+```
+PATH_SERVICES=./services/
+PROJECT_NAME=myproject
+VIRTUAL_HOST=myproject.lo
+HTTP_PORT=80
+HTTPS_PORT=443
+MYSQL_PORT=3304
+PHPMA_PORT=8080
+MONGODB_PORT=27021
+MONGODB_EXPRESS_PORT=8081
+ELASTIC_PORT=9200
+KIBANA_PORT=5601
+MAILDEV_PORT=81
+COMPOSE_CONVERT_WINDOWS_PATHS=1
+COMPOSE_PATH_SEPARATOR=:
+COMPOSE_FORCE_WINDOWS_HOST=false
+PHP_VERSION=8.2
+```
+
+
 
 # Hosts
 Create an example host in your `/etc/hosts` file which points to the webserver in the docker container
 
-`127.0.0.1 myproject.lo
+`127.0.0.1 myproject.lo`
 
 ## Configuration
 If your Dockerfiles reside at another location or if you want the application or associated containers to listen 
