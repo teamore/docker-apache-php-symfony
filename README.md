@@ -13,6 +13,8 @@ Potential apache servers which have already been installed must not run locally,
 
 First things first: **Name your project** and **adjust the project settings (ports etc.) by reviewing the provided .env - file**. It contains a set of variables which will be used while building the docker containers and during the installation of additional services inside the containers via ansible (playbooks).
 
+*NOTE: If you are defining a variable in your .env file, but there is an environment variable in your current shell session with the same name, the environment variable will take precedence!*
+
 ```
 PATH_SERVICES=./services/
 PROJECT_NAME=myproject
