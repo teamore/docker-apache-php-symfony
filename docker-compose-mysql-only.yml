@@ -3,6 +3,7 @@ services:
 
   app:
     container_name: ${PROJECT_NAME}-app
+    platform: ${PLATFORM}
     extends:
       file: ./shared/dockerfiles/templates/service.yml
       service: apache
@@ -29,6 +30,7 @@ services:
 
   mysql:
     image: mysql:5.7
+    platform: ${PLATFORM}
     container_name: ${PROJECT_NAME}-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -41,6 +43,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    platform: ${PLATFORM}
     container_name: ${PROJECT_NAME}-phpmyadmin
     ports:
       - ${PHPMA_PORT}:80
