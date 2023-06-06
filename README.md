@@ -121,6 +121,14 @@ docker-compose build
 docker-compose up [-d]
 ```
 
+This project comes with a "docker-compose-mysql-only.yaml" - configuration file which can be used if the mongodb and elasticsearch volumes are not needed.
+
+In order to use this configuration file, please execute
+
+```
+docker compose -f docker-compose-mysql-only.yml up
+```
+
 # Composer
 Log into Web container and run composer install to get dependencies
 
