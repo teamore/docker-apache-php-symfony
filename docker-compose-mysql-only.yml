@@ -23,7 +23,7 @@ services:
         PATH_SERVER_ROOT: ${PATH_SERVER_ROOT}
     volumes:
       - "${PATH_SERVICES}/frontend:/var/www/frontend:rw"
-      - "../${PROJECT_NAME}-app:${PATH_WORKDIR}:rw"
+      - "${PROJECT_ROOT}:${PATH_WORKDIR}:rw"
     working_dir: ${PATH_WORKDIR}
     command: >
       bash -c "./script/build-project.sh && /usr/sbin/apache2ctl -D FOREGROUND"

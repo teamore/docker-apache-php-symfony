@@ -1,3 +1,6 @@
 apache-logs/*.log
 !apache-logs/.gitkeep
 .idea
+app/public/assets/images/*
+!app/public/assets/images/.gitkeep
+**/.DS_Store
